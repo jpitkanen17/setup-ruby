@@ -56,7 +56,8 @@ export async function install(platform, engine, version) {
     } else if (common.getOSNameVersionArch().includes('arm64')){
       await installWithRubyBuild(engine, version, rubyPrefix)
     } else {
-      await downloadAndExtract(platform, engine, version, rubyPrefix)
+      await installWithRubyBuild(engine, version, rubyPrefix)
+      //await downloadAndExtract(platform, engine, version, rubyPrefix)
     }
   }
 
