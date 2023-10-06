@@ -237,7 +237,7 @@ function findWindowsVersion() {
 }
 
 export function shouldUseToolCache(engine, version) {
-  return (engine === 'ruby' && !isHeadVersion(version)) || isSelfHostedRunner()
+  return (engine === 'ruby' && !isHeadVersion(version))
 }
 
 export function getToolCachePath() {
