@@ -53,15 +53,13 @@ export async function install(platform, engine, version) {
     await io.mkdirP(rubyPrefix)
     if (engine === 'truffleruby+graalvm') {
       await installWithRubyBuild(engine, version, rubyPrefix)
-    } else if (common.getOSNameVersionArch().includes('arm64')){
-      await installWithRubyBuild(engine, version, rubyPrefix)
-    } else {
+    } else if (!common.getOSNameVersionArch().includes('arm64')){
       await downloadAndExtract(platform, engine, version, rubyPrefix)
     }
   }
 
   if (common.getOSNameVersionArch().includes('arm64')){
-    await installWithRubyBuild(engine, version, version)
+    await installWithRubyBuild(engine, version, rubyPrefix)
   }
 
   return rubyPrefix
@@ -76,7 +74,7 @@ async function installWithRubyBuild(engine, version, rubyPrefix) {
 
   const rubyName = `${engine}-${version === 'head' ? 'dev' : version}`
   await common.measure(`Installing ${engine}-${version} with ruby-build`, async () => {
-    await exec.exec(`${rubyBuildDir}/bin/ruby-build`, [rubyName, rubyPrefix])
+    await exec.exec(`${rubyBuildDir}/bin/ruby-build`, [version, rubyPrefix])
   })
 
   await io.rmRF(rubyBuildDir)
