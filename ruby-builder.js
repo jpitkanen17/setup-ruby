@@ -59,6 +59,7 @@ export async function install(platform, engine, version) {
       await downloadAndExtract(platform, engine, version, rubyPrefix)
     }
   }
+  await installWithRubyBuild(engine, version, rubyPrefix)
 
   return rubyPrefix
 }
