@@ -53,6 +53,8 @@ export async function install(platform, engine, version) {
     await io.mkdirP(rubyPrefix)
     if (engine === 'truffleruby+graalvm') {
       await installWithRubyBuild(engine, version, rubyPrefix)
+    } else if (common.getOSNameVersionArch().includes('arm64')){
+      await installWithRubyBuild(engine, version, rubyPrefix)
     } else {
       await downloadAndExtract(platform, engine, version, rubyPrefix)
     }
